@@ -1,17 +1,21 @@
 package com.logique.urlencrypter.entity;
 
-import java.util.Date;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.google.common.hash.Hashing;
 
 @Entity
 public class URL {
@@ -30,12 +34,48 @@ public class URL {
 	@CreatedDate
 	@DateTimeFormat(pattern = "dd-MM-yyyy" )
 	@Column(name = "shorterBirthDate")
-	private Date shorterBirthDate;
+	private LocalDate shorterBirthDate;
+	
+//	@OneToOne(mappedBy = User)
+//	private User owner;
 
-	public URL(@NotBlank String original, @NotBlank String shorter, Date shorterBirthDate) {
+	public URL(@NotBlank String original) {
 		super();
 		this.original = original;
-		this.shorter = shorter;
-		this.shorterBirthDate = new Date();
+		this.shorterBirthDate = LocalDate.now();
+		this.validate();
 	}
+	
+	public void validate() {
+		UrlValidator urlValidator = new UrlValidator(new String[] { "http", "https" });
+		if (!urlValidator.isValid(this.original)) {
+			throw new RuntimeException("URL invalid" + this.original);
+		}
+	}
+
+	public String generateShorterURL() {
+		this.shorter = Hashing.murmur3_32().hashString(this.original, StandardCharsets.UTF_8).toString();
+		return this.shorter;
+	}
+	
+	public String getOriginal() {
+		return original;
+	}
+
+	public String getShorter() {
+		return shorter;
+	}
+
+	public void setShorter(String shorter) {
+		this.shorter = shorter;
+	}
+
+	public LocalDate getShorterBirthDate() {
+		return shorterBirthDate;
+	}
+
+	public void setShorterBirthDate(LocalDate shorterBirthDate) {
+		this.shorterBirthDate = shorterBirthDate;
+	}
+	
 }
