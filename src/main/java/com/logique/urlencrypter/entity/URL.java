@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -35,9 +34,6 @@ public class URL {
 	@DateTimeFormat(pattern = "dd-MM-yyyy" )
 	@Column(name = "shorterBirthDate")
 	private LocalDate shorterBirthDate;
-	
-//	@OneToOne(mappedBy = User)
-//	private User owner;
 
 	public URL(@NotBlank String original) {
 		super();

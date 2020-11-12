@@ -7,7 +7,7 @@ import com.logique.urlencrypter.entity.User;
 
 public interface UserService {
 	
-	public List<URL> listCreatedURLs(String id);
+	public List<URL> listCreatedURLs(Long id);
 	
 	public void addUser(User user);
 }

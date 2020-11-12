@@ -2,6 +2,7 @@ package com.logique.urlencrypter.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,24 +25,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/apiuser")
 public class UserController {
 	
+	@Autowired
 	private UserService userService;
-//
-//	public UserController(UserService userService) {
-//		super();
-//		this.userService = userService;
-//	}
-//	
+
 	@ApiOperation(value = "Creates a new user")
 	@PostMapping("/add")
 	public void userAdd(@RequestBody User user) {
 		userService.addUser(user);
 	}
-//	
-//	
-//	@ApiOperation(value = "Returns the list of URLs created by ther user")
-//	@GetMapping("/listurlscreated/{id}")
-//	public  ResponseEntity<List<URL>> listURLsCreated(@PathVariable String id){
-//		return new ResponseEntity<List<URL>>(userService.listCreatedURLs(id),HttpStatus.OK);
-//		
-//	}
+
+	@ApiOperation(value = "Returns the list of URLs created by ther user")
+	@GetMapping("/listurlscreated/{id}")
+	public  ResponseEntity<List<URL>> listURLsCreated(@PathVariable Long id){
+		return new ResponseEntity<List<URL>>(userService.listCreatedURLs(id), HttpStatus.OK);
+		
+	}
 }

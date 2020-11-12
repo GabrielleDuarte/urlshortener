@@ -12,35 +12,33 @@ import org.springframework.stereotype.Service;
 import com.logique.urlencrypter.entity.MyUserDetails;
 import com.logique.urlencrypter.entity.URL;
 import com.logique.urlencrypter.entity.User;
+import com.logique.urlencrypter.exceptions.UserException;
 import com.logique.urlencrypter.repository.UserRepository;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService , UserService {
+public class MyUserDetailsService implements UserDetailsService, UserService {
 
-    @Autowired
-    UserRepository userRepository;
-
-    
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUserName(userName);
-
-        user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + userName));
-
-        return user.map(MyUserDetails::new).get();
-    }
-
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
-	public List<URL> listCreatedURLs(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+		Optional<User> user = userRepository.findByUserName(userName);
+
+		user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + userName));
+
+		return user.map(MyUserDetails::new).get();
 	}
 
+	@Override
+	public List<URL> listCreatedURLs(Long id) {
+		User user = userRepository.findById(id).orElseThrow(() -> new UserException("User not registred"));
+		return user.getCreatedURLs();
+	}
 
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
