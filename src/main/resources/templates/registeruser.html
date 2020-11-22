@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>cadastrar</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+		<form method="post" th:action="@{/add}" th:object="${user}">
+		  <div class="form-group row">
+		    <label for="userName" class="col-4 col-form-label">Username</label> 
+		    <div class="col-8">
+		      <input th:field="*{userName}" placeholder="Type the username" type="text" class="form-control">
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="password" class="col-4 col-form-label">Password</label> 
+		    <div class="col-8">
+		      <input th:field="*{password}" placeholder="Type password" type="text" class="form-control">
+		    </div>
+		  </div> 
+		  <div class="form-group row">
+		    <div class="offset-4 col-8">
+		      <button name="submit" type="submit" class="btn btn-primary">Cadastrar Aluno</button>
+		    </div>
+		  </div>
+		</form>		
+</div>
+</body>
+</html>		

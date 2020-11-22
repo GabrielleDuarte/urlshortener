@@ -10,6 +10,7 @@ public interface UserService {
 	public List<URL> listCreatedURLs(Long id);
 	
 	public void addUser(User user);
+	
 }
 
 

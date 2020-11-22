@@ -38,7 +38,6 @@ public class MyUserDetailsService implements UserDetailsService, UserService {
 
 	@Override
 	public void addUser(User user) {
-		// TODO Auto-generated method stub
-
+		userRepository.save(user);
 	}
 }
